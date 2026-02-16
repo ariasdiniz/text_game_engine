@@ -41,7 +41,11 @@ extern unsigned short tge_parse_command_array(char *restrict command, char **res
 
   for (unsigned short i = 0; i < MAXLEN && command[i] != '\0'; i++) {
     if (command[i] == ' ' && new_word_flag == 1) {
-      command_array[wordcount][word_idx + 1] = '\0';
+      if (word_idx < MAXLEN - 1) {
+        command_array[wordcount][word_idx + 1] = '\0';
+      } else {
+        command_array[wordcount][MAXLEN - 1] = '\0';
+      }
       new_word_flag &= 0b0;
       wordcount++;
       word_idx = 0;
@@ -56,7 +60,11 @@ extern unsigned short tge_parse_command_array(char *restrict command, char **res
     word_idx++;
   }
 
-  command_array[wordcount][word_idx + 1] = '\0';
+  if (word_idx < MAXLEN - 1) {
+    command_array[wordcount][word_idx + 1] = '\0';
+  } else {
+    command_array[wordcount][MAXLEN - 1] = '\0';
+  }
   return wordcount + 1;
 }
 
