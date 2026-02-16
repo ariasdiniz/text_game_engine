@@ -1,4 +1,6 @@
 /build/
 main.c
+test.c
 *.o
 *.so
+main
