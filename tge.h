@@ -34,7 +34,8 @@ typedef struct tge_player {
   struct tge_room *current_room;
 } tge_player;
 
-void run_action(char *command, tge_action_func action);
-void tge_trim(char *str);
+void run_action(char *restrict command, tge_action_func action);
+void tge_trim(char *restrict str);
+unsigned int word_compare(char *restrict fist, char *restrict second);
 
 #endif

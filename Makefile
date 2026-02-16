@@ -2,7 +2,7 @@ LIBNAME = tge
 BUILD_DIR = build
 TARGET_LIB = $(BUILD_DIR)/lib$(LIBNAME).so
 
-SRC = $(shell find . -type f -name "*.c" ! -name "main.c")
+SRC = $(shell find . -type f -name "*.c" ! -name "main.c" ! -name "test.c")
 
 OBJS = $(SRC:%.c=$(BUILD_DIR)/%.o)
 

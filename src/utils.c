@@ -4,14 +4,19 @@
 
 #define MAXLEN 64
 
-static unsigned int word_compare(char *restrict first, char *restrict second) {
-  for (int i = 0; i < MAXLEN && first[i] != '\0'; i++) {
+static char **command_array(char *restrict command) {
+
+}
+
+extern unsigned int word_compare(char *restrict first, char *restrict second) {
+  for (int i = 0; i < MAXLEN; i++) {
     if (tolower(first[i]) != tolower(second[i])) return 1;
+    if (first[i] == '\0' || second[i] == '\0') break;
   }
   return 0;
 }
 
-void tge_trim(char *str) {
+extern void tge_trim(char *restrict str) {
   char begin_flag = 0;
   char begin_idx = 0;
   char end_idx = 0;
@@ -35,10 +40,6 @@ void tge_trim(char *str) {
   str[end_idx - begin_idx + 1] = '\0';
 }
 
-static char **command_array(char *command) {
-
-}
-
-extern void run_action(char *command, tge_action_func action) {
+extern void run_action(char *restrict command, tge_action_func action) {
   
 }
