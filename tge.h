@@ -34,11 +34,14 @@ typedef struct tge_player {
   struct tge_room *current_room;
 } tge_player;
 
+#define TGE_MAXLEN 128
+#define TGE_MAXWORDS 32
+
 void run_action(char *restrict command, tge_action_func action);
 void tge_trim(char *restrict str);
 void tge_free_command_array(char **restrict command_array);
 unsigned int tge_word_compare(char *restrict fist, char *restrict second);
-unsigned short tge_parse_command_array(char *restrict command, char **restrict command_array);
+unsigned int tge_parse_command_array(char *restrict command, char **restrict command_array);
 char **tge_allocate_command_array();
 
 extern tge_player *player;
