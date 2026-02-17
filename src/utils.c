@@ -2,6 +2,83 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <stdio.h>
+
+tge_player *player = NULL;
+tge_command *tge_structured_commands = NULL;
+tge_room *tge_current_room = NULL;
+char **tge_parsed_commands = NULL;
+
+static void parse_command(
+  char *word,
+  char **possible_cmds,
+  unsigned int cmds_size,
+  char *command
+) {
+  for (unsigned int i = 0; i < cmds_size; i++) {
+    if (tge_word_compare(word, possible_cmds[i]) == 0) {
+      command = possible_cmds[i];
+      break;
+    }
+  }
+}
+
+static char **tge_allocate_command_array() {
+  char **commands = malloc(sizeof(char *) * TGE_MAXWORDS);
+  if (commands == NULL) {
+    errno = ENOMEM;
+    return NULL;
+  }
+
+  for (unsigned int i = 0; i < TGE_MAXWORDS; i++) {
+    commands[i] = malloc(sizeof(char) * TGE_MAXLEN);
+    if (commands[i] == NULL) {
+      for (unsigned int j = 0; j < i; j++) {
+        free(commands[j]);
+      }
+      free(commands);
+      errno = ENOMEM;
+      return NULL;
+    }
+  }
+  return commands;
+}
+
+static void tge_free_command_array(char **restrict command_array) {
+  for (unsigned int i = 0; i < TGE_MAXWORDS; i++) {
+    free(command_array[i]);
+  }
+  free(command_array);
+}
+
+void tge_malloc() {
+  tge_structured_commands = malloc(sizeof(tge_command));
+  if (tge_structured_commands == NULL) {
+    errno = ENOMEM;
+    return;
+  }
+
+  player = malloc(sizeof(tge_player));
+  if (tge_structured_commands == NULL) {
+    errno = ENOMEM;
+    free(tge_structured_commands);
+    return;
+  }
+
+  tge_parsed_commands = tge_allocate_command_array();
+  if (tge_parsed_commands == NULL) {
+    errno = ENOMEM;
+    free(tge_structured_commands);
+    free(player);
+    return;
+  }
+}
+
+void tge_free() {
+  free(tge_structured_commands);
+  free(player);
+  tge_free_command_array(tge_parsed_commands);
+}
 
 void tge_trim(char *restrict str) {
   unsigned int begin_flag = 0;
@@ -64,42 +141,10 @@ unsigned int tge_parse_command_array(char *restrict command, char **restrict com
   return wordcount + 1;
 }
 
-char **tge_allocate_command_array() {
-  char **commands = malloc(sizeof(char *) * TGE_MAXWORDS);
-  if (commands == NULL) {
-    errno = ENOMEM;
-    return NULL;
-  }
-
-  for (unsigned int i = 0; i < TGE_MAXWORDS; i++) {
-    commands[i] = malloc(sizeof(char) * TGE_MAXLEN);
-    if (commands[i] == NULL) {
-      for (unsigned int j = 0; j < i; j++) {
-        free(commands[j]);
-      }
-      free(commands);
-      errno = ENOMEM;
-      return NULL;
-    }
-  }
-  return commands;
-}
-
-void tge_free_command_array(char **restrict command_array) {
-  for (unsigned int i = 0; i < TGE_MAXWORDS; i++) {
-    free(command_array[i]);
-  }
-  free(command_array);
-}
-
 unsigned int tge_word_compare(char *restrict first, char *restrict second) {
   for (int i = 0; i < TGE_MAXLEN; i++) {
     if (tolower(first[i]) != tolower(second[i])) return 1;
     if (first[i] == '\0' || second[i] == '\0') break;
   }
   return 0;
-}
-
-void run_action(char *restrict command, tge_action_func action) {
-  
 }
