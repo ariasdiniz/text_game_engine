@@ -111,6 +111,14 @@ void tge_trim(char *restrict str) {
   str[end_idx - begin_idx + 1] = '\0';
 }
 
+char *tge_capitalize(char *str) {
+  if (str == NULL) return str;
+  if (str[0] == '\0') return str;
+
+  str[0] = toupper(str[0]);
+  return str;
+}
+
 unsigned int tge_parse_command_array(char *restrict command, char **restrict command_array) {
 
   unsigned int wordcount = 0;
@@ -170,7 +178,7 @@ void run_action(
     parse_command(tge_parsed_commands[i], ctx->ind_objs, ctx->ind_objs_size, &tge_structured_commands->ind_obj);
   }
   if (tge_structured_commands->verb == NULL) {
-    printf("%s can't do that.\n", player->name);
+    printf("%s can't do that.\n\n", player->name);
   } else {
     action(tge_structured_commands);
   }

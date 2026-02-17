@@ -1,0 +1,47 @@
+#include "demo.h"
+#include "../tge.h"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define START_GAME_0 "%s wakes up on the cold stone floor. %s eyes tries to adjust to the dim light" \
+                     "as %s try to understand where %s is. "
+
+#define START_GAME_1 "%s head aches and %s feels nauseous, but these feelings are suddenly suppressed" \
+                     "by the cold realization that %s is alone.\n\n"
+
+#define DESCRIPTION_0 "%s is in the center of a roundish stone cave. A dim light illuminates the place, but " \
+                      "%s isn't sure where it comes from. The air is damp and still, with a faint odor of " \
+                      "mold. "
+
+#define DESCRIPTION_1 "To the " ANSI_COLOR_GREEN "north" ANSI_COLOR_RESET ", where %s can barely see, camouflaged " \
+                      "by the shadows is an opening between two rocks, where %s can pass. There is no light " \
+                      "there, so it's hard to say where it leads. Maybe %s should find a light source before " \
+                      "proceeding. "
+
+#define DESCRIPTION_2 "To the " ANSI_COLOR_GREEN "west" ANSI_COLOR_RESET " there is something that, from here," \
+                      "looks like an stone altar.\n\nNothing else picks %s interest here.\n\n"
+
+
+static void describe() {
+  printf(DESCRIPTION_0, player->name, player->pronouns[0]);
+  printf(DESCRIPTION_1, player->name, player->pronouns[0], player->pronouns[0]);
+  tolower(player->pronouns[1][0]);
+  printf(DESCRIPTION_2, player->pronouns[1]);
+}
+
+static void starting_room_action(tge_command *cmd) {
+}
+
+void setup_starting_room() {
+  printf(START_GAME_0, player->name, tge_capitalize(player->pronouns[1]), player->pronouns[0], player->pronouns[0]);
+  printf(START_GAME_1, tge_capitalize(player->pronouns[1]), player->pronouns[0], player->pronouns[0]);
+  tolower(player->pronouns[1][0]);
+  starting_room.description = describe;
+  starting_room.func = starting_room_action;
+  starting_room.adjacent_rooms[0] = &north_room;
+  starting_room.adjacent_rooms[3] = &west_room;
+  north_room.adjacent_rooms[2] = &starting_room;
+  west_room.adjacent_rooms[1] = &starting_room;
+  tge_current_room = &starting_room;
+}

@@ -1,7 +1,7 @@
 /build/
-main.c
 test.c
 *.o
 *.so
 main
 ign_*
+damp_cave
