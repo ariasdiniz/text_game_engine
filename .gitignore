@@ -4,3 +4,4 @@ test.c
 *.o
 *.so
 main
+ign_*

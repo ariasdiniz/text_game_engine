@@ -13,11 +13,11 @@ static void parse_command(
   char *word,
   char **possible_cmds,
   unsigned int cmds_size,
-  char *command
+  char **command
 ) {
   for (unsigned int i = 0; i < cmds_size; i++) {
     if (tge_word_compare(word, possible_cmds[i]) == 0) {
-      command = possible_cmds[i];
+      *command = possible_cmds[i];
       break;
     }
   }
@@ -49,6 +49,13 @@ static void tge_free_command_array(char **restrict command_array) {
     free(command_array[i]);
   }
   free(command_array);
+}
+
+static void clean_structured_commands() {
+  tge_structured_commands->ind_obj = NULL;
+  tge_structured_commands->prep = NULL;
+  tge_structured_commands->noun = NULL;
+  tge_structured_commands->verb = NULL;
 }
 
 void tge_malloc() {
@@ -147,4 +154,24 @@ unsigned int tge_word_compare(char *restrict first, char *restrict second) {
     if (first[i] == '\0' || second[i] == '\0') break;
   }
   return 0;
+}
+
+void run_action(
+  char *restrict unparsed_command,
+  tge_command_special_words *ctx,
+  tge_action_func action
+) {
+  clean_structured_commands();
+  unsigned int commands_size = tge_parse_command_array(unparsed_command, tge_parsed_commands);
+  for (unsigned int i = 0; i < commands_size; i++) {
+    parse_command(tge_parsed_commands[i], ctx->verbs, ctx->verbs_size, &tge_structured_commands->verb);
+    parse_command(tge_parsed_commands[i], ctx->nouns, ctx->nouns_size, &tge_structured_commands->noun);
+    parse_command(tge_parsed_commands[i], ctx->preps, ctx->preps_size, &tge_structured_commands->prep);
+    parse_command(tge_parsed_commands[i], ctx->ind_objs, ctx->ind_objs_size, &tge_structured_commands->ind_obj);
+  }
+  if (tge_structured_commands->verb == NULL) {
+    printf("%s can't do that.\n", player->name);
+  } else {
+    action(tge_structured_commands);
+  }
 }

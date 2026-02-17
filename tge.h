@@ -21,7 +21,7 @@ typedef struct tge_command_special_words {
   unsigned int ind_objs_size;
 } tge_command_special_words;
 
-typedef void *tge_action_func(tge_command *cmd);
+typedef void tge_action_func(tge_command *cmd);
 
 typedef struct tge_room {
   char *description;
