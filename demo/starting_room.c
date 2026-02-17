@@ -4,10 +4,10 @@
 #include <string.h>
 #include <ctype.h>
 
-#define START_GAME_0 "%s wakes up on the cold stone floor. %s eyes tries to adjust to the dim light" \
+#define START_GAME_0 "%s wakes up on the cold stone floor. %s eyes try to adjust to the dim light " \
                      "as %s try to understand where %s is. "
 
-#define START_GAME_1 "%s head aches and %s feels nauseous, but these feelings are suddenly suppressed" \
+#define START_GAME_1 "%s head aches and %s feels nauseous, but these feelings are suddenly suppressed " \
                      "by the cold realization that %s is alone.\n\n"
 
 #define DESCRIPTION_0 "%s is in the center of a roundish stone cave. A dim light illuminates the place, but " \
@@ -20,7 +20,7 @@
                       "proceeding. "
 
 #define DESCRIPTION_2 "To the " ANSI_COLOR_GREEN "west" ANSI_COLOR_RESET " there is something that, from here," \
-                      "looks like an stone altar.\n\nNothing else picks %s interest here.\n\n"
+                      "looks like a stone altar.\n\nNothing else picks %s interest here.\n\n"
 
 
 static void describe() {
@@ -31,6 +31,19 @@ static void describe() {
 }
 
 static void starting_room_action(tge_command *cmd) {
+  if (
+      tge_word_compare(cmd->verb, "describe") == 0 ||
+      (
+        tge_word_compare(cmd->verb, "look") == 0 && (
+          tge_word_compare(cmd->noun, "around") == 0 ||
+          tge_word_compare(cmd->noun, "room") == 0
+        )
+      )
+    ) {
+      describe();
+      return;
+    }
+  if (tge_word_compare(cmd->verb, "go"));
 }
 
 void setup_starting_room() {

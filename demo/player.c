@@ -20,8 +20,7 @@ static void initialize_player() {
     strncpy(player->pronouns[0], "they", 4);
     strncpy(player->pronouns[1], "them", 4);
   }
-  printf("%s: %s/%s\n", player->name, player->pronouns[0], player->pronouns[1]);
-  printf("HP: %d/%d\n", player->current_health, player->max_health);
+  printf("\n\n");
 }
 
 void initialize() {

@@ -32,10 +32,30 @@ void free_special_words() {
   free(special_words);
 }
 
-void setup_commands() {
-  malloc_special_words();
-  special_words->nouns_size = 0;
+void setup_verbs() {
+  strcpy(special_words->verbs[0], "describe");
+  strcpy(special_words->verbs[1], "look");
+  special_words->verbs_size = 2;
+}
+
+void setup_nouns() {
+  strcpy(special_words->nouns[0], "around");
+  strcpy(special_words->nouns[1], "room");
+  special_words->nouns_size = 2; 
+}
+
+void setup_preps() {
   special_words->preps_size = 0;
-  special_words->verbs_size = 0;
+}
+
+void setup_ind() {
   special_words->ind_objs_size = 0;
+}
+
+void setup_commands() {
+  malloc_special_words();  
+  setup_verbs();
+  setup_nouns();
+  setup_preps();
+  setup_ind();
 }
