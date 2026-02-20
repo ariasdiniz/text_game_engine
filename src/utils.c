@@ -157,6 +157,7 @@ unsigned int tge_parse_command_array(char *restrict command, char **restrict com
 }
 
 unsigned int tge_word_compare(char *restrict first, char *restrict second) {
+  if (first == NULL || second == NULL) return 1;
   for (int i = 0; i < TGE_MAXLEN; i++) {
     if (tolower(first[i]) != tolower(second[i])) return 1;
     if (first[i] == '\0' || second[i] == '\0') break;
@@ -181,5 +182,10 @@ void run_action(
     printf("%s can't do that.\n\n", player->name);
   } else {
     action(tge_structured_commands);
+  }
+  for (unsigned int i = 0; i < commands_size; i++) {
+    for (unsigned int j = 0; j < TGE_MAXLEN; j++) {
+      tge_parsed_commands[i][j] = '\0';
+    }
   }
 }
