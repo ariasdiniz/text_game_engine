@@ -7,8 +7,8 @@
 
 #define DESCRIPTION_0 "As %s reaches this part of the cave, a chill runs down %s spine as a faint breeze " \
                       "comes from behind %s. While the rest of the cave looks natural, this part clearly " \
-                      "have been worked and used by humans. In front of one of the walls there is a large "\
-                      "stone altar. The top of the altar is sullied with bloodstains, and the flame flicking" \
+                      "has been worked and used by humans. In front of one of the walls there is a large "\
+                      "stone altar. The top of the altar is sullied with bloodstains, and the flame flickering" \
                       "from the small brazier suspended above the altar casts an eerie shadow on it. " \
                       "Murals with symbols in bas-relief were carefully carved in the stone walls.\n\n"
 
@@ -17,14 +17,14 @@
 #define DESCRIPTION_0_1_CONDITIONAL "With the lit torch burning bright, %s can now make sense of the carvings. " \
                                     "The carvings describe robed figures kidnapping victims, bringing them unconscious to " \
                                     "an altar and sacrificing them. As some of the carvings suggests, these sacrifices are " \
-                                    "made to empower an entity %s never seen before, a gigantic being with human torso, "\
-                                    "squid head and several tentacles coming out from it's mouth. It's clear that %s "\
+                                    "made to empower an entity %s has never seen before, a gigantic being with human torso, "\
+                                    "squid head and several tentacles coming out from its mouth. It's clear that %s "\
                                     "would be the next victim, but %s have no idea what happened here that prevented it.\n\n"
 
 #define DESCRIPTION_0_2_CONDITIONAL "Despite the light from the brazier, %s can't make much sense of the carvings.\n"
 
 #define DESCRIPTION_1 "To the " ANSI_COLOR_GREEN "east" ANSI_COLOR_RESET " there is the part of the cave where " \
-                      "%s came from.\n\nNothing else picks %s interest here.\n\n"
+                      "%s came from.\n\nNothing else piques %s interest here.\n\n"
 
 static int is_room_instantiated = 0;
 static int have_lit_torch = 0;
@@ -78,12 +78,13 @@ static void west_room_action(tge_command *cmd) {
   if (
     tge_word_compare(cmd->verb, "take") == 0 ||
     tge_word_compare(cmd->verb, "grab") == 0 ||
-    tge_word_compare(cmd->verb, "pick") == 0
+    tge_word_compare(cmd->verb, "pick") == 0 ||
+    tge_word_compare(cmd->verb, "get") == 0
   ) {
     if (tge_word_compare(cmd->noun, "torch") == 0 && have_torch == 0) {
       tge_item_transfer("TORCH", player->items, starting_room.items);
       have_torch++;
-      printf("%s take the torch. A shame that an unlit torch is of little use.\n\n", player->name);
+      printf("%s takes the torch. A shame that an unlit torch is of little use.\n\n", player->name);
       return;
     }
   }
@@ -99,7 +100,7 @@ static void west_room_action(tge_command *cmd) {
         have_lit_torch++;
         tge_destroy_item("TORCH", player->items);
         tge_create_item("L_TORCH", player->items);
-        printf("%s lit the torch using the brazier.\n\n", player->name);
+        printf("%s lits the torch using the brazier.\n\n", player->name);
         printf(DESCRIPTION_0_1_CONDITIONAL, player->name, player->pronouns[0], player->pronouns[0], player->pronouns[0]);
         return;
       }

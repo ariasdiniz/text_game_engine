@@ -45,7 +45,8 @@ void setup_verbs() {
   strcpy(special_words->verbs[9], "grab");
   strcpy(special_words->verbs[10], "hold");
   strcpy(special_words->verbs[11], "use");
-  special_words->verbs_size = 12;
+  strcpy(special_words->verbs[12], "get");
+  special_words->verbs_size = 13;
 }
 
 void setup_nouns() {
