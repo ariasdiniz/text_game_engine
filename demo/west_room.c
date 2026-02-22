@@ -91,7 +91,8 @@ static void west_room_action(tge_command *cmd) {
     tge_word_compare(cmd->verb, "lit") == 0 ||
     tge_word_compare(cmd->verb, "put") == 0 ||
     tge_word_compare(cmd->verb, "hold") == 0 ||
-    tge_word_compare(cmd->verb, "use") == 0
+    tge_word_compare(cmd->verb, "use") == 0 ||
+    tge_word_compare(cmd->verb, "light") == 0
   ) {
     if (tge_word_compare(cmd->noun, "torch") == 0) {
       if (tge_word_compare(cmd->ind_obj, "brazier") == 0 && have_torch && have_lit_torch == 0) {
@@ -100,6 +101,9 @@ static void west_room_action(tge_command *cmd) {
         tge_create_item("L_TORCH", player->items);
         printf("%s lits the torch using the brazier.\n\n", player->name);
         printf(DESCRIPTION_0_1_CONDITIONAL, player->name, player->pronouns[0], player->pronouns[0], player->pronouns[0]);
+        return;
+      } else {
+        printf("How does %s light the torch?\n\n", player->name);
         return;
       }
     }
@@ -112,7 +116,7 @@ void setup_west_room() {
   if (is_room_instantiated == 0) {
     west_room.description = describe;
     west_room.func = west_room_action;
-    strcpy(west_room.items[0], "TORCH");
+    strncpy(west_room.items[0], "TORCH", 6);
     is_room_instantiated++;
   }
 }

@@ -10,9 +10,9 @@ OBJS = $(SRC:%.c=$(BUILD_DIR)/%.o)
 DEMO_SRC = $(shell find demo -type f)
 
 CC = gcc
-CFLAGS = -Wall -g -march=native -fPIC
+CFLAGS = -Wall -O2 -march=native -fPIC
 LDFLAGS = -shared
-DEMO_FLAGS = -L$(BUILD_DIR) -l$(LIBNAME) -Wl,-rpath,$(BUILD_DIR) -Wall -g
+DEMO_FLAGS = -L$(BUILD_DIR) -l$(LIBNAME) -Wl,-rpath,$(BUILD_DIR) -Wall -O2
 
 .PHONY: all clean
 

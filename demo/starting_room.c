@@ -104,13 +104,14 @@ static void starting_room_action(tge_command *cmd) {
 
 void setup_starting_room() {
   if (is_room_instantiated == 0) {
-    printf(START_GAME_0, player->name, tge_capitalize(player->pronouns[1]), player->pronouns[0], player->pronouns[0]);
+    printf(START_GAME_0, tge_capitalize(player->name), tge_capitalize(player->pronouns[1]), player->pronouns[0], player->pronouns[0]);
     printf(START_GAME_1, tge_capitalize(player->pronouns[1]), player->pronouns[0], player->pronouns[0]);
     player->pronouns[1][0] = tolower(player->pronouns[1][0]);
     starting_room.description = describe;
     starting_room.func = starting_room_action;
     starting_room.adjacent_rooms[0] = &north_room;
     starting_room.adjacent_rooms[3] = &west_room;
+    strncpy(starting_room.items[0], "KEY", 4);
     north_room.adjacent_rooms[2] = &starting_room;
     west_room.adjacent_rooms[1] = &starting_room;
     player->current_room = &starting_room;

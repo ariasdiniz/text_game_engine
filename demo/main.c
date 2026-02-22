@@ -7,9 +7,9 @@
 
 tge_room starting_room, north_room, west_room;
 tge_command_special_words *special_words;
+int finish_game = 1;
 
 int main() {
-  int finish_game = 1;
   char buffer[TGE_MAXLEN];
   initialize();
   setup_commands();
@@ -19,6 +19,7 @@ int main() {
   }
   setup_starting_room();
   setup_west_room();
+  setup_north_room();
   tge_room *room = NULL;
   while (finish_game) {
     if (player->current_room != room) {

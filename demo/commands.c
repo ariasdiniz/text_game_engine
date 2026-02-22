@@ -47,7 +47,9 @@ void setup_verbs() {
   strcpy(special_words->verbs[11], "use");
   strcpy(special_words->verbs[12], "get");
   strcpy(special_words->verbs[13], "unlock");
-  special_words->verbs_size = 14;
+  strcpy(special_words->verbs[14], "open");
+  strcpy(special_words->verbs[15], "light");
+  special_words->verbs_size = 16;
 }
 
 void setup_nouns() {
@@ -59,7 +61,8 @@ void setup_nouns() {
   strcpy(special_words->nouns[5], "east");
   strcpy(special_words->nouns[6], "torch");
   strcpy(special_words->nouns[7], "key");
-  special_words->nouns_size = 8; 
+  strcpy(special_words->nouns[8], "dagger");
+  special_words->nouns_size = 9; 
 }
 
 void setup_preps() {
