@@ -6,7 +6,6 @@
 
 tge_player *player = NULL;
 tge_command *tge_structured_commands = NULL;
-tge_room *tge_current_room = NULL;
 char **tge_parsed_commands = NULL;
 
 static void parse_command(

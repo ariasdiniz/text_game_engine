@@ -20,8 +20,8 @@ int main() {
   setup_starting_room();
   tge_room *room = NULL;
   while (endgame) {
-    if (tge_current_room != room) {
-      room = tge_current_room;
+    if (player->current_room != room) {
+      room = player->current_room;
       room->description();
     }
     printf("What does %s do?\n", player->name);

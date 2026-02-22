@@ -16,7 +16,7 @@ DEMO_FLAGS = -L$(BUILD_DIR) -l$(LIBNAME) -Wl,-rpath,$(BUILD_DIR) -g
 
 .PHONY: all clean
 
-all: $(TARGET_LIB)
+all: $(TARGET_LIB) $(TARGET_DEMO)
 
 $(TARGET_DEMO): $(DEMO_SRC)
 	gcc tge.h $^ $(DEMO_FLAGS) -o $(TARGET_DEMO)

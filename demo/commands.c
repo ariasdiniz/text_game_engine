@@ -2,7 +2,7 @@
 #include "../tge.h"
 #include <string.h>
 
-#define NWORDS 8
+#define NWORDS 16
 
 static void malloc_special_words() {
   special_words = malloc(sizeof(tge_command_special_words));
@@ -35,13 +35,24 @@ void free_special_words() {
 void setup_verbs() {
   strcpy(special_words->verbs[0], "describe");
   strcpy(special_words->verbs[1], "look");
-  special_words->verbs_size = 2;
+  strcpy(special_words->verbs[2], "go");
+  strcpy(special_words->verbs[3], "walk");
+  strcpy(special_words->verbs[4], "run");
+  strcpy(special_words->verbs[5], "lit");
+  strcpy(special_words->verbs[6], "take");
+  strcpy(special_words->verbs[7], "put");
+  special_words->verbs_size = 8;
 }
 
 void setup_nouns() {
   strcpy(special_words->nouns[0], "around");
   strcpy(special_words->nouns[1], "room");
-  special_words->nouns_size = 2; 
+  strcpy(special_words->nouns[2], "north");
+  strcpy(special_words->nouns[3], "west");
+  strcpy(special_words->nouns[4], "south");
+  strcpy(special_words->nouns[5], "east");
+  strcpy(special_words->nouns[6], "torch");
+  special_words->nouns_size = 7; 
 }
 
 void setup_preps() {

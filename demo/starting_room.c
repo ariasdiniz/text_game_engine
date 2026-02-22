@@ -43,7 +43,19 @@ static void starting_room_action(tge_command *cmd) {
       describe();
       return;
     }
-  if (tge_word_compare(cmd->verb, "go"));
+  if (
+    tge_word_compare(cmd->verb, "go") == 0 ||
+    tge_word_compare(cmd->verb, "walk") == 0 ||
+    tge_word_compare(cmd->verb, "run") == 0
+  ) {
+    if (tge_word_compare(cmd->noun, "north") == 0) {
+      player->current_room = player->current_room->adjacent_rooms[0];
+    } else if (tge_word_compare(cmd->noun, "west") == 0) {
+      player->current_room = player->current_room->adjacent_rooms[3];
+    } else {
+      printf("%s can't do that.");
+    }
+  }
 }
 
 void setup_starting_room() {
@@ -56,5 +68,5 @@ void setup_starting_room() {
   starting_room.adjacent_rooms[3] = &west_room;
   north_room.adjacent_rooms[2] = &starting_room;
   west_room.adjacent_rooms[1] = &starting_room;
-  tge_current_room = &starting_room;
+  player->current_room = &starting_room;
 }

@@ -71,7 +71,6 @@ unsigned int tge_word_compare(char *restrict fist, char *restrict second);
 unsigned int tge_parse_command_array(char *restrict command, char **restrict command_array);
 
 extern tge_player *player;
-extern tge_room *tge_current_room;
 extern char **tge_parsed_commands;
 extern tge_command *tge_structured_commands;
 
