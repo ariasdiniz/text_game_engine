@@ -8,9 +8,8 @@ void finish();
 void setup_commands();
 
 void setup_starting_room();
+void setup_west_room();
 void free_special_words();
-
-// Game state variables
 
 extern tge_room starting_room;
 extern tge_room north_room;

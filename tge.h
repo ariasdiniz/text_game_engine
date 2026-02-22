@@ -14,6 +14,9 @@
 #define ANSI_COLOR_BLUE    "\x1b[34m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+#define TGE_ENOISPACE 300
+#define TGE_ENOITEM 301
+
 typedef struct tge_command {
   char *verb;
   char *noun;
@@ -57,7 +60,7 @@ typedef struct tge_player {
 
 void run_action(
   char *restrict unparsed_command,
-  tge_command_special_words *ctx,
+  tge_command_special_words *restrict ctx,
   tge_action_func action
 );
 
@@ -68,6 +71,10 @@ void tge_free();
 char *tge_capitalize(char *str);
 
 unsigned int tge_word_compare(char *restrict fist, char *restrict second);
+int tge_find_item(char *restrict item, char list[MAX_INVENTORY_SIZE][MAX_NAME_LEN]);
+void tge_create_item(char *restrict item, char list[MAX_INVENTORY_SIZE][MAX_NAME_LEN]);
+void tge_destroy_item(char *restrict item, char list[MAX_INVENTORY_SIZE][MAX_NAME_LEN]);
+void tge_item_transfer(char *restrict item, char to[MAX_INVENTORY_SIZE][MAX_NAME_LEN], char from[MAX_INVENTORY_SIZE][MAX_NAME_LEN]);
 unsigned int tge_parse_command_array(char *restrict command, char **restrict command_array);
 
 extern tge_player *player;

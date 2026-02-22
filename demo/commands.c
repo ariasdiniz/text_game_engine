@@ -41,7 +41,11 @@ void setup_verbs() {
   strcpy(special_words->verbs[5], "lit");
   strcpy(special_words->verbs[6], "take");
   strcpy(special_words->verbs[7], "put");
-  special_words->verbs_size = 8;
+  strcpy(special_words->verbs[8], "pick");
+  strcpy(special_words->verbs[9], "grab");
+  strcpy(special_words->verbs[10], "hold");
+  strcpy(special_words->verbs[11], "use");
+  special_words->verbs_size = 12;
 }
 
 void setup_nouns() {
@@ -52,7 +56,8 @@ void setup_nouns() {
   strcpy(special_words->nouns[4], "south");
   strcpy(special_words->nouns[5], "east");
   strcpy(special_words->nouns[6], "torch");
-  special_words->nouns_size = 7; 
+  strcpy(special_words->nouns[7], "key");
+  special_words->nouns_size = 8; 
 }
 
 void setup_preps() {
@@ -60,7 +65,9 @@ void setup_preps() {
 }
 
 void setup_ind() {
-  special_words->ind_objs_size = 0;
+  strcpy(special_words->ind_objs[0], "brazier");
+  strcpy(special_words->nouns[1], "door");
+  special_words->ind_objs_size = 2;
 }
 
 void setup_commands() {

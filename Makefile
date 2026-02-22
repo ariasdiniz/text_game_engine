@@ -12,7 +12,7 @@ DEMO_SRC = $(shell find demo -type f)
 CC = gcc
 CFLAGS = -Wall -g -march=native -fPIC
 LDFLAGS = -shared
-DEMO_FLAGS = -L$(BUILD_DIR) -l$(LIBNAME) -Wl,-rpath,$(BUILD_DIR) -g
+DEMO_FLAGS = -L$(BUILD_DIR) -l$(LIBNAME) -Wl,-rpath,$(BUILD_DIR) -Wall -g
 
 .PHONY: all clean
 

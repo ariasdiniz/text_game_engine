@@ -18,13 +18,14 @@ int main() {
     return EXIT_FAILURE;
   }
   setup_starting_room();
+  setup_west_room();
   tge_room *room = NULL;
   while (endgame) {
     if (player->current_room != room) {
       room = player->current_room;
       room->description();
     }
-    printf("What does %s do?\n", player->name);
+    printf("\nWhat does %s do?\n", player->name);
     fgets(buffer, TGE_MAXLEN, stdin);
     run_action(buffer, special_words, room->func);
   }
