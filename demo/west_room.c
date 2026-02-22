@@ -34,8 +34,6 @@ static void describe() {
   if (have_lit_torch == 0 && tge_find_item("L_TORCH", player->items) != -1) {
     have_lit_torch = 1;
   }
-  player->pronouns[1][0] = tolower(player->pronouns[1][0]);
-  player->pronouns[1][1] = tolower(player->pronouns[1][1]);
 
   printf(DESCRIPTION_0, player->name, player->pronouns[1], player->pronouns[1]);
 

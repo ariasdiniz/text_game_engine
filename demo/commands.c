@@ -46,7 +46,8 @@ void setup_verbs() {
   strcpy(special_words->verbs[10], "hold");
   strcpy(special_words->verbs[11], "use");
   strcpy(special_words->verbs[12], "get");
-  special_words->verbs_size = 13;
+  strcpy(special_words->verbs[13], "unlock");
+  special_words->verbs_size = 14;
 }
 
 void setup_nouns() {
@@ -67,7 +68,7 @@ void setup_preps() {
 
 void setup_ind() {
   strcpy(special_words->ind_objs[0], "brazier");
-  strcpy(special_words->nouns[1], "door");
+  strcpy(special_words->ind_objs[1], "door");
   special_words->ind_objs_size = 2;
 }
 
