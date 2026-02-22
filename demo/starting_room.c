@@ -53,7 +53,7 @@ static void starting_room_action(tge_command *cmd) {
     } else if (tge_word_compare(cmd->noun, "west") == 0) {
       player->current_room = player->current_room->adjacent_rooms[3];
     } else {
-      printf("%s can't do that.");
+      printf("%s can't do that.", player->name);
     }
   }
 }
