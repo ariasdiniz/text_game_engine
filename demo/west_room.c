@@ -19,7 +19,7 @@
                                     "an altar and sacrificing them. As some of the carvings suggests, these sacrifices are " \
                                     "made to empower an entity %s never seen before, a gigantic being with human torso, "\
                                     "squid head and several tentacles coming out from it's mouth. It's clear that %s "\
-                                    "would be the next victim, but %s have no idea what happened here.\n\n"
+                                    "would be the next victim, but %s have no idea what happened here that prevented it.\n\n"
 
 #define DESCRIPTION_0_2_CONDITIONAL "Despite the light from the brazier, %s can't make much sense of the carvings.\n"
 
@@ -42,7 +42,7 @@ static void describe() {
   if (have_torch == 0) printf(DESCRIPTION_0_0_CONDITIONAL);
 
   if (have_lit_torch) {
-    printf(DESCRIPTION_0_1_CONDITIONAL, player->name, player->pronouns[0], player->name, player->pronouns[0]);
+    printf(DESCRIPTION_0_1_CONDITIONAL, player->name, player->pronouns[0], player->pronouns[0], player->pronouns[0]);
   } else {
     printf(DESCRIPTION_0_2_CONDITIONAL, player->name);
   }
@@ -100,7 +100,7 @@ static void west_room_action(tge_command *cmd) {
         tge_destroy_item("TORCH", player->items);
         tge_create_item("L_TORCH", player->items);
         printf("%s lit the torch using the brazier.\n\n", player->name);
-        printf(DESCRIPTION_0_1_CONDITIONAL, player->name, player->pronouns[0]);
+        printf(DESCRIPTION_0_1_CONDITIONAL, player->name, player->pronouns[0], player->pronouns[0], player->pronouns[0]);
         return;
       }
     }
