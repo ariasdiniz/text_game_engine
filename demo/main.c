@@ -17,9 +17,9 @@ int main() {
     perror("Error allocating memory.");
     return EXIT_FAILURE;
   }
-  setup_starting_room();
   setup_west_room();
   setup_north_room();
+  setup_starting_room();
   tge_room *room = NULL;
   while (finish_game) {
     if (player->current_room != room) {

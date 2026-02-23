@@ -40,6 +40,7 @@ static char **tge_allocate_command_array() {
       errno = ENOMEM;
       return NULL;
     }
+    memset(commands[i], '\0', TGE_MAXLEN);
   }
   return commands;
 }
@@ -117,6 +118,25 @@ void tge_free() {
   free(tge_structured_commands);
   free(player);
   tge_free_command_array(tge_parsed_commands);
+}
+
+void tge_initialize_room(tge_room *room) {
+  if (room == NULL) return;
+
+  for (unsigned int i = 0; i < MAX_INVENTORY_SIZE; i++) {
+    memset(room->items[i], '\0', MAX_NAME_LEN);
+  }
+  room->adjacent_rooms[0] = NULL;
+  room->adjacent_rooms[1] = NULL;
+  room->adjacent_rooms[2] = NULL;
+  room->adjacent_rooms[3] = NULL;
+}
+
+void tge_initialize_player() {
+  for (unsigned int i = 0; i < MAX_INVENTORY_SIZE; i++) {
+    memset(player->items[i], '\0', MAX_NAME_LEN);
+    memset(player->status[i], '\0', MAX_NAME_LEN);
+  }
 }
 
 void tge_trim(char *restrict str) {

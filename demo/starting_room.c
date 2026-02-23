@@ -106,6 +106,7 @@ void setup_starting_room() {
   if (is_room_instantiated == 0) {
     printf(START_GAME_0, tge_capitalize(player->name), tge_capitalize(player->pronouns[1]), player->pronouns[0], player->pronouns[0]);
     printf(START_GAME_1, tge_capitalize(player->pronouns[1]), player->pronouns[0], player->pronouns[0]);
+    tge_initialize_room(&starting_room);
     player->pronouns[1][0] = tolower(player->pronouns[1][0]);
     starting_room.description = describe;
     starting_room.func = starting_room_action;
