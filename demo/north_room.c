@@ -156,6 +156,7 @@ static void north_room_action(tge_command *cmd) {
 
 void setup_north_room() {
   if (is_room_instantiated == 0) {
+    tge_initialize_room(&north_room);
     north_room.description = describe;
     north_room.func = north_room_action;
     strncpy(west_room.items[0], "DAGGER", 7);

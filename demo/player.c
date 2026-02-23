@@ -4,6 +4,7 @@
 
 static void initialize_player() {
   char buffer[MAX_NAME_LEN];
+  tge_initialize_player();
   printf("What is your character's name?\n");
   fgets(player->name, MAX_NAME_LEN, stdin);
   tge_trim(player->name);

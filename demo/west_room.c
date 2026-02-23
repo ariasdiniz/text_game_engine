@@ -114,6 +114,7 @@ static void west_room_action(tge_command *cmd) {
 
 void setup_west_room() {
   if (is_room_instantiated == 0) {
+    tge_initialize_room(&west_room);
     west_room.description = describe;
     west_room.func = west_room_action;
     strncpy(west_room.items[0], "TORCH", 6);

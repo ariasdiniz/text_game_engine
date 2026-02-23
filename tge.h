@@ -67,6 +67,8 @@ void run_action(
 void tge_trim(char *restrict str);
 void tge_malloc();
 void tge_free();
+void tge_initialize_player();
+void tge_initialize_room(tge_room *room);
 
 char *tge_capitalize(char *str);
 
