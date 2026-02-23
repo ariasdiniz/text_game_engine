@@ -1,3 +1,21 @@
+/*
+Text Game Engine
+Copyright (C) 2026 Aria Diniz
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #ifndef __LIB_TGE_HEADER_
 #define __LIB_TGE_HEADER_
 
@@ -47,7 +65,7 @@ typedef struct tge_room {
 
 typedef struct tge_player {
   char name[MAX_NAME_LEN];
-  char pronouns[2][MAX_NAME_LEN];
+  char pronouns[3][MAX_NAME_LEN];
   char items[MAX_INVENTORY_SIZE][MAX_NAME_LEN];
   char status[MAX_INVENTORY_SIZE][MAX_NAME_LEN];
   int max_health;

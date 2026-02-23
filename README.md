@@ -14,6 +14,8 @@ This engine was developed as a short-term hobby project over the course of a few
 
 As an engineering exercise, I recognize several areas where the engine could be evolved to reach "production-grade" stability:
 
+**PS: I know the demo game have broken use of pronouns when you choose Option 1, and I plan to fix in the future. I designed the demo thinking in my character that uses Option 2, and this was a big oversight from my part. Sorry!**
+
 ### 1. Shift from Global to Contextual State
 
 Currently, the engine relies on global variables for the player and command structures. A more robust implementation would involve passing a `GameContext` pointer through functions to support reentrancy and potentially multiple simultaneous game instances.
@@ -107,3 +109,7 @@ make PLATFORM=mac ARCH=arm64
 ### Output
 
 The build process generates a shared library (`.so`, `.dll`, or `.dylib`) and a demo executable within a platform-specific subdirectory in the `build/` folder. This keeps object files and binaries isolated by architecture.
+
+## License
+
+Distributed under the GNU General Public License v3.0 or later. See [COPYING](https://github.com/ariasdiniz/text_game_engine/blob/main/COPYING) for more information.
