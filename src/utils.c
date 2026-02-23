@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <stdio.h>
+#include <string.h>
 
 tge_player *player = NULL;
 tge_command *tge_structured_commands = NULL;
-tge_room *tge_current_room = NULL;
 char **tge_parsed_commands = NULL;
 
 static void parse_command(
-  char *word,
+  char *restrict word,
   char **possible_cmds,
   unsigned int cmds_size,
   char **command
@@ -56,6 +56,38 @@ static void clean_structured_commands() {
   tge_structured_commands->prep = NULL;
   tge_structured_commands->noun = NULL;
   tge_structured_commands->verb = NULL;
+}
+
+static int find_empty_idx(char list[MAX_INVENTORY_SIZE][MAX_NAME_LEN], int size) {
+  for (int i = 0; i < size; i++) {
+    if (list[i][0] == '\0') return i;
+  }
+  return -1;
+}
+
+int tge_find_item(char *restrict item, char list[MAX_INVENTORY_SIZE][MAX_NAME_LEN]) {
+  for (int i = 0; i < MAX_INVENTORY_SIZE; i++) {
+    if (tge_word_compare(list[i], item) == 0) return i;
+  }
+  return -1;
+}
+
+void tge_create_item(char *restrict item, char list[MAX_INVENTORY_SIZE][MAX_NAME_LEN]) {
+  int idx = find_empty_idx(list, MAX_INVENTORY_SIZE);
+  if (idx == -1) {
+    errno = TGE_ENOISPACE;
+    return;
+  }
+  strncpy(list[idx], item, MAX_NAME_LEN);
+}
+
+void tge_destroy_item(char *restrict item, char list[MAX_INVENTORY_SIZE][MAX_NAME_LEN]) {
+  int idx = tge_find_item(item, list);
+  if (idx == -1) {
+    errno = TGE_ENOITEM;
+    return;
+  }
+  list[idx][0] = '\0';
 }
 
 void tge_malloc() {
@@ -111,6 +143,14 @@ void tge_trim(char *restrict str) {
   str[end_idx - begin_idx + 1] = '\0';
 }
 
+char *tge_capitalize(char *str) {
+  if (str == NULL) return str;
+  if (str[0] == '\0') return str;
+
+  str[0] = toupper(str[0]);
+  return str;
+}
+
 unsigned int tge_parse_command_array(char *restrict command, char **restrict command_array) {
 
   unsigned int wordcount = 0;
@@ -149,6 +189,7 @@ unsigned int tge_parse_command_array(char *restrict command, char **restrict com
 }
 
 unsigned int tge_word_compare(char *restrict first, char *restrict second) {
+  if (first == NULL || second == NULL) return 1;
   for (int i = 0; i < TGE_MAXLEN; i++) {
     if (tolower(first[i]) != tolower(second[i])) return 1;
     if (first[i] == '\0' || second[i] == '\0') break;
@@ -156,9 +197,24 @@ unsigned int tge_word_compare(char *restrict first, char *restrict second) {
   return 0;
 }
 
+void tge_item_transfer(char *restrict item, char to[MAX_INVENTORY_SIZE][MAX_NAME_LEN], char from[MAX_INVENTORY_SIZE][MAX_NAME_LEN]) {
+  int idx = tge_find_item(item, from);
+  if (idx == -1) {
+    errno = TGE_ENOITEM;
+    return;
+  }
+  int inv_idx = find_empty_idx(to, MAX_INVENTORY_SIZE);
+  if (inv_idx == -1) {
+    errno = TGE_ENOISPACE;
+    return;
+  }
+  strncpy(to[inv_idx], from[idx], MAX_NAME_LEN);
+  from[idx][0] = '\0';
+}
+
 void run_action(
   char *restrict unparsed_command,
-  tge_command_special_words *ctx,
+  tge_command_special_words *restrict ctx,
   tge_action_func action
 ) {
   clean_structured_commands();
@@ -170,8 +226,13 @@ void run_action(
     parse_command(tge_parsed_commands[i], ctx->ind_objs, ctx->ind_objs_size, &tge_structured_commands->ind_obj);
   }
   if (tge_structured_commands->verb == NULL) {
-    printf("%s can't do that.\n", player->name);
+    printf("%s can't do that.\n\n", player->name);
   } else {
     action(tge_structured_commands);
+  }
+  for (unsigned int i = 0; i < commands_size; i++) {
+    for (unsigned int j = 0; j < TGE_MAXLEN; j++) {
+      tge_parsed_commands[i][j] = '\0';
+    }
   }
 }
